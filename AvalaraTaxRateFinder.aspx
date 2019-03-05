@@ -88,11 +88,7 @@
                     <asp:Label ID="lbl_County" runat="server" Text=""></asp:Label>
                          <br />
                     <asp:Label ID="lbl_City" runat="server" Text=""></asp:Label>
-                         <br />
-                    <asp:Label ID="Label3" runat="server" Text=""></asp:Label>
-                         <br />
-                    <asp:Label ID="Label4" runat="server" Text=""></asp:Label>
-                         <br />
+
                     <asp:Label ID="lbl_TaxGroupCode" runat="server" Text=""></asp:Label>
                          <br />
                     <asp:Label ID="lbl_TaxRate" runat="server" Text=""></asp:Label>

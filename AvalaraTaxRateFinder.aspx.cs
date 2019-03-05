@@ -2,7 +2,7 @@
 *                                                 GOD First                                                                                        *
 * Author: Dustin Ledbetter                                                                                                                         *
 * Release Date: 1-15-2019                                                                                                                          *
-* Last Edited:  1-16-2019                                                                                                                          *
+* Last Edited:  3-5-2019                                                                                                                           *
 * Version: 1.0                                                                                                                                     *
 * Purpose: This is a web app that allows a user to give a zipcode and get the returned tax rate for that zipcode                                   *
 ***************************************************************************************************************************************************/
@@ -37,15 +37,15 @@ public partial class AvalaraTaxRateFinder : System.Web.UI.Page
     protected void Btn_FindRate_Click(object sender, EventArgs e)
     {
 
-        // Place in a try catch bloack incase the number passed is valid, but it is not a valid zipcode
+        // Place in a try catch block incase the number passed is valid, but it is not a valid zipcode
         try
         {
 
-
             // clear all labels out
-
-
-
+            taxresults.Visible = false;
+            lbl_County.Visible = false;
+            lbl_TaxGroupCode.Visible = false;
+            lbl_TaxRate.Visible = false;
 
             // Test if user specified zipcode is valid or not
             if (IsValidZipCode(tbx_Zipcode.Text) == true)
@@ -62,11 +62,12 @@ public partial class AvalaraTaxRateFinder : System.Web.UI.Page
                 var client = new AvaTaxClient("", "", null, null);
 
                 // Set the Avalara environment to be on Sandbox
-                client = new AvaTaxClient("AvalaraTaxExtension", "1.0", Environment.MachineName, AvaTaxEnvironment.Sandbox)
-                    .WithSecurity($"nulled for security", $"nulled for security");
+                client = new AvaTaxClient("blanked for security", "blanked for security", Environment.MachineName, AvaTaxEnvironment.blanked for security)
+                    .WithSecurity($"blanked for security", $"blanked for security");
 
                 // This creates the transaction that reaches out to alavara and gets the amount of tax for the user based on info we send
-                var transaction = new TransactionBuilder(client, $"nulled for security", DocumentType.SalesOrder, $"nulled for security")
+                // send client we created above in code, the company code on alavara I created, type of transaction, and the customer code (000 to note from myccorp version)
+                var transaction = new TransactionBuilder(client, $"CCorp", DocumentType.SalesOrder, $"000")
 
                     // Pass the zipcode user passed from form 
                     .WithAddress(TransactionAddressType.SingleLocation, null, null, null, null, null, zipcode, null)
@@ -102,7 +103,9 @@ public partial class AvalaraTaxRateFinder : System.Web.UI.Page
                     lbl_Country.Text = county;
                     lbl_State.Text = stateAssignedNo;
                     lbl_County.Text = "<b>Total Tax: </b>" + Convert.ToString(d["totalTax"]);
+
                     // Show the results to the user
+                    lbl_County.Visible = true;
                     taxresults.Visible = true;
                 }
                 // else assume it is US
@@ -121,9 +124,10 @@ public partial class AvalaraTaxRateFinder : System.Web.UI.Page
                     lbl_State.Text = state;
                     lbl_County.Text = county;
                     lbl_TaxGroupCode.Text = stateAssignedNo;
+                    lbl_TaxRate.Text = "<b>Tax Rate: </b>" + Convert.ToString(d["totalTax"]);
 
                     // Show the results to the user
-                    lbl_TaxRate.Text = Convert.ToString(d["totalTax"]);
+                    lbl_TaxRate.Visible = true;
                     taxresults.Visible = true;
                     lbl_County.Visible = true;
                     lbl_TaxGroupCode.Visible = true;
